@@ -1,0 +1,3 @@
+[submodule "sdk/aiml/DINO"]
+	path = sdk/aiml/DINO
+	url = https://github.com/IDEA-Research/DINO.git
