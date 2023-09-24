@@ -1,0 +1,3 @@
+[submodule "sdk/aiml/single_chan/YOLOv6"]
+	path = sdk/aiml/single_chan/YOLOv6
+	url = https://github.com/meituan/YOLOv6.git
