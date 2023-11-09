@@ -47,7 +47,10 @@ def train_per_epoch(train_loader, num_epochs, model, optimizer, criterion):
         
         # Averaging out loss over entire batch 
         running_loss /= batch_size 
-        train_loss.append(running_loss) 	
+        train_loss.append(running_loss)
+        if running_loss < train_loss[epoch-1]:
+            print('saving new best model')
+            torch.save(model.state_dict(), 'best_mode.pth') 	
         # Storing useful images and 
         # reconstructed outputs for the last batch 
         outputs[epoch+1] = {'img': img, 'out': out}

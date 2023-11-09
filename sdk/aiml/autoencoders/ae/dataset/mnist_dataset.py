@@ -5,7 +5,7 @@ import torchvision
 import torch 
 
 
-def get_minst():
+def get_mnist():
 	# Downloading the MNIST dataset 
 	train_dataset = torchvision.datasets.MNIST( 
 		root="./MNIST/train", train=True, 
