@@ -5,7 +5,7 @@ import torchvision.transforms as transforms
 # PyTorch TensorBoard support
 from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
-
+import glob
 
 def create_dataset():
         
@@ -30,3 +30,6 @@ def create_dataset():
     print('Validation set has {} instances'.format(len(validation_set)))
 
     return training_loader, validation_loader
+
+def test_dataset(directory):
+    images = glob.glob(directory + '**/*.png')
