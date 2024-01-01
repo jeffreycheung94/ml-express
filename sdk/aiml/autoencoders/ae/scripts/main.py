@@ -5,9 +5,8 @@ import torchvision
 import torch 
 import ae 
 
-from ae.dataset.mnist_dataset import get_mnist
 from ae.models.model import DeepAutoencoder
-from ae.core.train import train_per_epoch
+from ae.models.train import train_per_epoch
 
 
 plt.rcParams['figure.figsize'] = 15, 10

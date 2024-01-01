@@ -1,9 +1,0 @@
-validators 
-matplotlib
-torch
-pillow
-torchvision
-numpy
-requests
-matplotlib
-
