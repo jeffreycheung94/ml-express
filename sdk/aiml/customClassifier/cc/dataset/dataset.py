@@ -1,6 +1,7 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
+from PIL import Image
 
 # PyTorch TensorBoard support
 from torch.utils.tensorboard import SummaryWriter
@@ -34,7 +35,13 @@ def create_dataset(batch_size):
 def single_image_inference(image_path):
     transform = transforms.Compose(
         [transforms.ToTensor(),
+        transforms.Resize((28,28)),
         transforms.Normalize((0.5,), (0.5,))])
-    training_loader = torch.utils.data.DataLoader(training_set, batch_size=1)
+    img = Image.open(image_path).convert('L')
+    img = transform(img)
+    
+    return img
 
+
+    
     

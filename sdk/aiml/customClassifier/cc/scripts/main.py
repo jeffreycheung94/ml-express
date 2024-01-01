@@ -10,6 +10,7 @@ from cc.models.model import ClassifierModel
 from cc.models.train import train_one_epoch 
 from cc.models.loss import create_loss_fn 
 from cc.dataset.dataset import create_dataset
+from cc.dataset.dataset import single_image_inference
 from pathlib import Path
 
 def main():
@@ -20,8 +21,8 @@ def main():
     parser.add_argument('--train', required=False, action='store_true', help='pass in arg if training the model')
     parser.add_argument('--epochs', type=int, required=False, help='number of epochs to train')
     parser.add_argument('--weights', required=False, action='store_true', help='pre-trained weights if inferencing or resuming training')
-    parser.add_argument('--batch_size_train', required=True, type=int, default=100, help='desired batch size for training')
-    parser.add_argument('--output_dir', required=True, type=str, help='output dir for weights and tb logs')
+    parser.add_argument('--batch_size_train', required=False, type=int, default=100, help='desired batch size for training')
+    parser.add_argument('--output_dir', required=False, type=str, help='output dir for weights and tb logs')
 
 
     #get args
@@ -30,8 +31,6 @@ def main():
     pretrain_weights = args.weights
     num_epochs = args.epochs
     batch_size = args.batch_size_train
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
 
 
     #intialize model
@@ -41,11 +40,11 @@ def main():
     training_loader, validation_loader = create_dataset(batch_size)
 
     if train: 
-        if torch.cuda.is_available():
-            device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu') 
-            model.to(device)
-            print('training with gpu!')
-        
+        output_dir = Path(args.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu') 
+        model.to(device)
+    
         #initalize optimizer and loss 
         #TODO convert optimizer to a method
         optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
@@ -88,15 +87,11 @@ def main():
     else:
         #create model and load weights 
         saved_model = ClassifierModel()
-        saved_model.load_state_dict(torch.load(pretrain_weights))
-        
-        
+        saved_model.load_state_dict(torch.load('/mnt/c/Users/jeffr/SynologyDrive/Coding/repos/ml-express/sdk/aiml/customClassifier/cc/scripts/there/best_model.pth'))
         saved_model.eval()
-        # with torch.no_grad():
-        #     # for i, vdata in enumerate(validation_loader):
-        #     #     vinputs, vlabels = vdata
-        #     #     voutputs = model(vinputs)
-        #     #     vloss = loss_fn(voutputs, vlabels)
-
+        model_input = single_image_inference('/mnt/c/Users/jeffr/SynologyDrive/Coding/repos/ml-express/scratch/dog.jpg')
+        with torch.no_grad():
+            result = model(model_input)
+        print(result)
 if __name__ == '__main__':
     main()

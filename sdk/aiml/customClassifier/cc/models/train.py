@@ -6,8 +6,7 @@ def train_one_epoch(epoch_index, tb_writer, training_loader, validation_loader, 
     running_loss = 0.
     last_loss = 0.
     
-    if torch.cuda.is_available():
-        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     for i, data in enumerate(training_loader):
         # Every data instance is an input + label pair
