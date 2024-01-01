@@ -20,9 +20,10 @@ def train_per_epoch(train_loader, num_epochs, model, optimizer, criterion):
         running_loss = 0
         # Iterating over the training dataset 
         for batch in train_loader: 
-            out = model(batch[0]) 
-            loss = criterion(out, batch[0]) 
-            print(loss)
+            reshaped_image = batch[0].reshape(-1, 28*28)
+
+            out = model(reshaped_image) 
+            loss = criterion(out, reshaped_image) 
             
             # Updating weights according 
             # to the calculated loss 
@@ -32,9 +33,9 @@ def train_per_epoch(train_loader, num_epochs, model, optimizer, criterion):
             
             # Incrementing loss 
             running_loss += loss.item()
-            
         # Averaging out loss over entire batch 
         running_loss /= batch_size 
+        print(running_loss)
         train_loss.append(running_loss)
         if running_loss < train_loss[epoch-1]:
             print('saving new best model')

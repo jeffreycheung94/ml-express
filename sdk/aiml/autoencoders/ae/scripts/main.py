@@ -35,13 +35,13 @@ def main():
     if train:
         transform = torchvision.transforms.Compose([ 
             torchvision.transforms.ToTensor(), 
-            torchvision.transforms.Normalize((0.5), (0.5)) 
+            # torchvision.transforms.Normalize((0.5), (0.5)) 
         ]) 
-        training_loader, validation_loader = create_dataset(1000)
+        training_loader, validation_loader = create_dataset(256, transform)
         model = DeepAutoencoder()
         criterion = torch.nn.MSELoss() 
         num_epochs = 25
-        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3) 
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-1, weight_decay=1e-8) 
         train_per_epoch(training_loader, num_epochs, model, optimizer, criterion)
     else:
         #create model and load weights 

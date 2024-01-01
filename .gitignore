@@ -167,3 +167,4 @@ cython_debug/
 **/FashionMNIST/raw/train-labels-idx1-ubyte
 **/FashionMNIST/raw/train-labels-idx1-ubyte.gz
 **/best_model.pth
+**/FashionMNIST/raw/train-images-idx3-ubyte.gz

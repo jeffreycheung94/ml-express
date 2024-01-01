@@ -8,11 +8,11 @@ from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
 import glob
 
-def create_dataset(batch_size):
+def create_dataset(batch_size, transform):
         
-    transform = transforms.Compose(
-        [transforms.ToTensor(),
-        transforms.Normalize((0.5,), (0.5,))])
+    # transform = transforms.Compose(
+    #     [transforms.ToTensor(),
+    #     transforms.Normalize((0.5,), (0.5,))])
 
     # Create datasets for training & validation, download if necessary
     training_set = torchvision.datasets.FashionMNIST('./data', train=True, transform=transform, download=True)
